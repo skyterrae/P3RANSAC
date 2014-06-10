@@ -1,0 +1,27 @@
+Hele algoritme:
+
+-Console Application
+-40 settings
+
+for each setting:
+	for i = 0 - 100:
+		vul box
+		itereer tot plane = 90%
+	schrijf naar textbestand
+
+vul box:
+	op plane zet random k punten
+	for each punt:
+		creeër bol
+		randomiseer bol
+	in box zet random n-k punten
+
+randomiseer bol:
+	4 random getallen 0-1: X1, X2, X3, U
+	D = StraalBol * U^(1/3)
+	V = (X1, X2, X3)
+	P = oude k
+	nieuw punt = P + ((D/(X1^2+X2^2+X3^2)^(1/2))* V
+
+Itereer tot plane:
+	zie Wiki op opdrachtpagina
