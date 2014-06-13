@@ -9,11 +9,11 @@ partial class Ransac
 
     int amountOfPoints;             //n
     int amountOfPlanePoints;        //k
-    int ballRadius; // In m.        //b
-    int planeDistance; // In m.     //d
+    int ballRadius; // In cm.       //b
+    int planeDistance; // In cm.    //d
     
-    int planeX, planeY; // In m!    //a
-    int boxLength, boxWidth, boxHeight; // In m!
+    int planeX, planeY; // In cm!   //a
+    int boxLength, boxWidth, boxHeight; // In cm!
 
     int amountOfIterations, totalResult;
     int[] results;
@@ -33,9 +33,9 @@ partial class Ransac
         planeX = pX;
         planeY = pY;
 
-        boxLength = 50;
-        boxWidth = 50;
-        boxHeight = 20;
+        boxLength = 5000;
+        boxWidth = 5000;
+        boxHeight = 2000;
 
         amountOfIterations = 10;
 

@@ -12,10 +12,12 @@ class Program
     {
         RansacSettings = new Ransac[1];
 
-        RansacSettings[0] = new Ransac(500, 3, 6, 6);
+        RansacSettings[0] = new Ransac(500, 3, 600, 600);
 
         Console.WriteLine( RansacSettings[0].ToString() );
+
         Console.ReadLine();
+
     }
 
 }

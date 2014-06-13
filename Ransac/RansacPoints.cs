@@ -70,13 +70,13 @@ partial class Ransac
         for (int p = 0; p < amountOfPlanePoints; p++)
         {
             // Create ball on (0,0,0), create a shiftVector within ball.
-            V = ShiftPointWithinBall(pointList[p], ballRadius, r);
+            V = ShiftPointWithinBall(pointList[p], ballRadius);
             // apply this shift on pointList[p]
             pointList[p] = pointList[p].Add(V);
         }
     }
 
-    private Punt ShiftPointWithinBall(Punt p, int BallRadius, Random r)
+    private Punt ShiftPointWithinBall(Punt p, int BallRadius)
     {
         //shifts a point within a ball of a certain radius
         double X1, X2, X3, U;

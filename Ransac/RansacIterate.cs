@@ -15,21 +15,48 @@ partial class Ransac
         //finds the planes
         for (int i = 0; i < results.Length; i++)
         {
-            results[i] = FindPlaneOnce();
+            int j = 0;
+            int k = 0;
+            int minFoundPoints = (amountOfPlanePoints/10)*3;
+            while(k<minFoundPoints)
+            {
+                k = IterateOnce();
+                j++;
+            }
+            results[i] = j;
         }
 
         //sorts the results and gives the appropriate result back;
         SortResults();
-        if(!Debug_CorrectSort())
-            throw(new Exception("Sorted Incorectly"));
 
         //return 5th-biggest-value?
        totalResult = results[5];
     }
-    private int FindPlaneOnce()
+    private int IterateOnce()
     {
-        //veel rekenzooi
-        return r.Next(10, 100);
+        //maakt een plane uit random punten en geeft terug hoeveel punten er in de box langs de plane liggen
+
+        //vind 3 verschillende random punten die straks een plane vormen
+        int a, b, c;
+        a = r.Next(amountOfPoints);
+        b = r.Next(amountOfPoints);
+        c = r.Next(amountOfPoints);
+        while (b == a)
+            b = r.Next(amountOfPoints);
+        while(c==a || a==b)
+            c = r.Next(amountOfPoints);
+
+        //kijkt voor alle punten...
+        int L = 0;
+        for (int i = 0; i < pointList.Length; i++)
+        {
+            //..of ze dicht genoeg bij de gevormde plane liggen
+            float D =Punt.DistanceFromPlane(pointList[a],pointList[b],pointList[c],pointList[i]);
+            if(-planeDistance <= D && D <= planeDistance)
+                L++;
+        }
+        //geeft het aantal punten terug dat bij de plane ligt
+        return L;
     }
     private void SortResults()
     {
