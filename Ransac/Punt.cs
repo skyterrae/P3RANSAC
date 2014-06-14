@@ -39,15 +39,13 @@ class Punt
     {
         get { return (float) Math.Sqrt(Math.Pow(X,2) + Math.Pow(Y,2)+Math.Pow(Z,2) ); }
     }
-    public static float DistanceFromPlane(Punt a, Punt b, Punt c, Punt p)
+    public static float DistanceFromPlane(Punt O, Punt N, Punt p)
     {
-        //plane gaat door a en heeft normaalvector N = (b-a)X(c-a)
-        Punt N = b.Substract(a).Cross(c.Substract(a));
-        
+       
         //http://mathworld.wolfram.com/Plane.html
         //http://mathworld.wolfram.com/Point-PlaneDistance.html
-        //maakt vector van a naar p, projecteert deze op N en geeft zijn lengte terug
-        float D = (N.X * p.X + N.Y*p.Y + N.Z*p.Z -N.X*a.X -N.Y*a.Y -N.Z*a.Z)/N.Length;
+        //maakt vector van O naar p, projecteert deze op N en geeft zijn lengte terug
+        float D = (N.X * p.X + N.Y*p.Y + N.Z*p.Z -N.X*O.X -N.Y*O.Y -N.Z*O.Z)/N.Length;
         return D;
     }
 }

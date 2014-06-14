@@ -16,7 +16,9 @@ partial class Ransac
     int boxLength, boxWidth, boxHeight; // In cm!
 
     int amountOfIterations, totalResult;
+    float PlaneSupport;
     int[] results;
+
     Random r;
 
     Punt[] pointList;
@@ -37,11 +39,12 @@ partial class Ransac
         boxWidth = 5000;
         boxHeight = 2000;
 
-        amountOfIterations = 10;
+        amountOfIterations = 100;  // moet nog naar 100
+        PlaneSupport = 0.9f;  // moet nog naar 0.9f voor 90%
 
         FillBox();
 
-        FindPlane();
+        FindThePlane();
     }
 
     public override string ToString()

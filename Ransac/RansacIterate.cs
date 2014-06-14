@@ -2,37 +2,56 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 partial class Ransac
 {
-    //part of the class that takes care of the iterative planefinding part
+    bool DoneThreading;
 
-    private void FindPlane()
+    public void FindPlaneInThread(object StateInfo)
+    {
+        int index = (int)StateInfo;
+
+        //starting iterating
+        int j = 0; //iterationcounter
+        int k = 0; //currentFoundPoints
+
+        //moet meer dan 90% van de punten op de echte plane aan de huidige plane kunnen matchen
+        int minFoundPoints = (int)((float)amountOfPlanePoints * PlaneSupport);
+        while (k < minFoundPoints)
+        {
+            k = FindPointsForSomePlane();
+            j++;
+        }
+
+        //saving result
+        results[index] = j;
+
+        //als het laatste item geweest is, geef dat door
+        if (index == results.Length - 1) 
+            DoneThreading = true;
+    }
+
+    private void FindThePlane()
     {
         //tries to find the plane 'amountOfIterations'-times, and stores the results in this array:
         results = new int[amountOfIterations];
+        DoneThreading = false;
 
-        //finds the planes
-        for (int i = 0; i < results.Length; i++)
-        {
-            int j = 0;
-            int k = 0;
-            int minFoundPoints = (amountOfPlanePoints/10)*3;
-            while(k<minFoundPoints)
-            {
-                k = IterateOnce();
-                j++;
-            }
-            results[i] = j;
-        }
+        //start Threads
+        for (int index = 0; index < results.Length; index++)
+            ThreadPool.QueueUserWorkItem(new WaitCallback(FindPlaneInThread), index);
+
+        while (!DoneThreading)
+            ;
 
         //sorts the results and gives the appropriate result back;
         SortResults();
 
         //return 5th-biggest-value?
-       totalResult = results[5];
+        totalResult = results[5];
     }
-    private int IterateOnce()
+    private int FindPointsForSomePlane()
     {
         //maakt een plane uit random punten en geeft terug hoeveel punten er in de box langs de plane liggen
 
@@ -46,13 +65,17 @@ partial class Ransac
         while(c==a || a==b)
             c = r.Next(amountOfPoints);
 
+        //plane gaat door a en heeft normaalvector N = (b-a)X(c-a)
+        Punt N = pointList[b].Substract(pointList[a]).Cross(pointList[c].Substract(pointList[a]));
+
         //kijkt voor alle punten...
         int L = 0;
+        
         for (int i = 0; i < pointList.Length; i++)
         {
             //..of ze dicht genoeg bij de gevormde plane liggen
-            float D =Punt.DistanceFromPlane(pointList[a],pointList[b],pointList[c],pointList[i]);
-            if(-planeDistance <= D && D <= planeDistance)
+            float D = Punt.DistanceFromPlane(pointList[a], N, pointList[i]);
+            if(Math.Abs(D) <= planeDistance)
                 L++;
         }
         //geeft het aantal punten terug dat bij de plane ligt
@@ -94,15 +117,5 @@ partial class Ransac
             QuickSort(Arr, p, q - 1);
             QuickSort(Arr, q + 1, r);
         }
-    }
-
-    private bool Debug_CorrectSort()
-    {
-        for (int k = 1; k < results.Length; k++)
-        {
-            if (results[k] > results[k - 1])
-                return false;
-        }
-        return true;
     }
 }
