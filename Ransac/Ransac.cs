@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 partial class Ransac
 {
@@ -46,11 +47,20 @@ partial class Ransac
 
         FindThePlane();
     }
-
-    public override string ToString()
+     public override string ToString()
     {
         //for readability the variablenames are in it;
         //this can be changed though;
-        return "k = " + amountOfPlanePoints + ", b = " + ballRadius + ", a = (" + planeX + "," + planeY + ") ; result = " + totalResult;
+       return "k=" + amountOfPlanePoints + ", b=" + ballRadius + ", a=(" + planeX + "," + planeY + ") ; result = " + totalResult;
+    }
+
+    public void ToStream(StreamWriter sw)
+    {
+        //for readability the variablenames are in it;
+        //this can be changed though;
+        sw.WriteLine("k=" + amountOfPlanePoints + ", b=" + ballRadius + ", a=(" + planeX + "," + planeY + ") ; result = " + totalResult);
+        sw.WriteLine("Ordered list of loose values:");
+        foreach (int i in results)
+            sw.WriteLine(i + ";");
     }
 }

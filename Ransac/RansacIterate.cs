@@ -38,10 +38,11 @@ partial class Ransac
         results = new int[amountOfIterations];
         DoneThreading = false;
 
-        //start Threads
+        //start Threads (makes a que that includes all iteration-indexes
         for (int index = 0; index < results.Length; index++)
             ThreadPool.QueueUserWorkItem(new WaitCallback(FindPlaneInThread), index);
 
+        //wait for the que to end
         while (!DoneThreading)
             ;
 
