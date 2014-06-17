@@ -11,8 +11,8 @@ class Program
     static void Main(string[] args)
     {
         RansacSettings = new Ransac[40];
-        Directory.GetCurrentDirectory();
-        StreamWriter SW = new StreamWriter(Directory.GetCurrentDirectory() + "/output.txt",true);
+        //Directory.GetCurrentDirectory();
+        //StreamWriter SW = new StreamWriter(Directory.GetCurrentDirectory() + "/output.txt",true);
             //( Directory.GetCurrentDirectory() +"/output.txt", FileMode.Create);
         //iterate through all settings
         for (int i = 0; i < 1; i++)
@@ -41,7 +41,7 @@ class Program
             //RansacSettings[i].ToStream(SW);
             Console.WriteLine( System.DateTime.Now +" - "+i+" - "+RansacSettings[i].ToString() );
         }
-        SW.WriteLine(System.DateTime.Now + " - Mission Accompished.");
+        //SW.WriteLine(System.DateTime.Now + " - Mission Accompished.");
         
 
         Console.ReadLine();
