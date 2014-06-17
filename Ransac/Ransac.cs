@@ -64,13 +64,21 @@ partial class Ransac
             sw.WriteLine(i + ";");
     }
 
-    public void WriteToFile(string path)
+    public void WriteToFile(string path, string text = "")
     {
         StreamWriter writer = new StreamWriter(path, true); // Bool true zorgt ervoor dat als file al bestaat, hij de text eraan toevoegd (append).
-        writer.WriteLine("k=" + amountOfPlanePoints + ", b=" + ballRadius + ", a=(" + planeX + "," + planeY + ") ; result = " + totalResult);
-        writer.WriteLine("Ordered list of loose values:");
-        foreach (int i in results)
-            writer.WriteLine(i + ";");
+
+        if (text == "")
+        {
+            writer.WriteLine("k=" + amountOfPlanePoints + ", b=" + ballRadius + ", a=(" + planeX + "," + planeY + ") ; result = " + totalResult);
+            writer.WriteLine("Ordered list of loose values:");
+            foreach (int i in results)
+                writer.WriteLine(i + ";");
+        }
+        else
+        {
+            writer.WriteLine(text);
+        }
         writer.Close();
 
     }

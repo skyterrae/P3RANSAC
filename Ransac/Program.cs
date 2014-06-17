@@ -32,9 +32,11 @@ class Program
             { x = 1500; y = 240; }
             int b = i % 5;
 
-            Console.WriteLine(System.DateTime.Now + " - Iteration " + i +", k="+k+", b="+b+", x="+x+", y="+y);
+            string text = System.DateTime.Now + " - Iteration " + i +", k="+k+", b="+b+", x="+x+", y="+y;
+            Console.WriteLine(text);
             RansacSettings[i] = new Ransac(k, b, x, y);
             string path = "output.txt";
+            RansacSettings[i].WriteToFile(path, text);
             RansacSettings[i].WriteToFile(path);
             //RansacSettings[i].ToStream(SW);
             Console.WriteLine( System.DateTime.Now +" - "+i+" - "+RansacSettings[i].ToString() );
