@@ -51,12 +51,12 @@ partial class Ransac
     {
         //for readability the variablenames are in it;
         //this can be changed though;
-       return "k=" + amountOfPlanePoints + ", b=" + ballRadius + ", a=(" + planeX + "," + planeY + ") ; result = " + totalResult;
+       return "result = " + totalResult;
     }
 
     public void WriteToFile(string path, string text = "")
     {
-        StreamWriter writer = new StreamWriter(path, true); // Bool true zorgt ervoor dat als file al bestaat, hij de text eraan toevoegd (append).
+        StreamWriter writer = new StreamWriter(path, false); //geen append. sorry
 
         if (text == "")
         {

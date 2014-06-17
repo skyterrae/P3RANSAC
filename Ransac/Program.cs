@@ -13,7 +13,7 @@ class Program
         RansacSettings = new Ransac[40];
 
         //iterate through all settings
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < RansacSettings.Length; i++)
         {
             int k;
             if (i < 20)
@@ -30,11 +30,10 @@ class Program
             { x = 1500; y = 240; }
             int b = i % 5;
 
-            string text = "Setting " + i +", k="+k+", b="+b+", x="+x+", y="+y;
-            Console.WriteLine(System.DateTime.Now + " - " + text);
+            Console.WriteLine(System.DateTime.Now + " - Setting " + i +", k="+k+", b="+b+", x="+x+", y="+y);
             RansacSettings[i] = new Ransac(k, b, x, y);
             RansacSettings[i].WriteToFile("output"+i+".txt");
-            Console.WriteLine( System.DateTime.Now +" - "+i+" - "+RansacSettings[i].ToString() );
+            Console.WriteLine( System.DateTime.Now +" - Setting "+i+", "+RansacSettings[i].ToString() );
         }
         Console.WriteLine(System.DateTime.Now + " - Mission Accompished.");     
 
