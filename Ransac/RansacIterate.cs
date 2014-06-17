@@ -6,7 +6,7 @@ using System.Threading;
 
 partial class Ransac
 {
-    bool DoneThreading;
+    int QueueLength;
 
     public void FindPlaneInThread(object StateInfo)
     {
@@ -27,23 +27,22 @@ partial class Ransac
         //saving result
         results[index] = j;
 
-        //als het laatste item geweest is, geef dat door
-        if (index == results.Length - 1) 
-            DoneThreading = true;
+        //als het item af geweest is, geef dat door
+        QueueLength--;
     }
 
     private void FindThePlane()
     {
         //tries to find the plane 'amountOfIterations'-times, and stores the results in this array:
         results = new int[amountOfIterations];
-        DoneThreading = false;
+        QueueLength = amountOfIterations;
 
         //start Threads (makes a que that includes all iteration-indexes
         for (int index = 0; index < results.Length; index++)
             ThreadPool.QueueUserWorkItem(new WaitCallback(FindPlaneInThread), index);
 
         //wait for the que to end
-        while (!DoneThreading)
+        while (QueueLength >0)
             ;
 
         //sorts the results and gives the appropriate result back;
