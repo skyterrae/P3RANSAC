@@ -36,8 +36,7 @@ class Program
             RansacSettings[i].WriteToFile("output"+i+".txt");
             Console.WriteLine( System.DateTime.Now +" - "+i+" - "+RansacSettings[i].ToString() );
         }
-        Console.WriteLine(System.DateTime.Now + " - Mission Accompished.");
-        
+        Console.WriteLine(System.DateTime.Now + " - Mission Accompished.");     
 
         Console.ReadLine();
 
