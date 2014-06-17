@@ -34,7 +34,9 @@ class Program
 
             Console.WriteLine(System.DateTime.Now + " - Iteration " + i +", k="+k+", b="+b+", x="+x+", y="+y);
             RansacSettings[i] = new Ransac(k, b, x, y);
-            RansacSettings[i].ToStream(SW);
+            string path = "output.txt";
+            RansacSettings[i].WriteToFile(path);
+            //RansacSettings[i].ToStream(SW);
             Console.WriteLine( System.DateTime.Now +" - "+i+" - "+RansacSettings[i].ToString() );
         }
         SW.WriteLine(System.DateTime.Now + " - Mission Accompished.");
