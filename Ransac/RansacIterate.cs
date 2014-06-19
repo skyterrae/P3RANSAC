@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 partial class Ransac
 {
@@ -35,21 +36,25 @@ partial class Ransac
     {
         //tries to find the plane 'amountOfIterations'-times, and stores the results in this array:
         results = new int[amountOfIterations];
-        QueueLength = amountOfIterations;
+        
+        //an alternative method to do the queue work
+        //Parallel.For(0, amountOfIterations, i => { FindPlaneInThread(i); });
 
-        //start Threads (makes a que that includes all iteration-indexes
-        for (int index = 0; index < results.Length; index++)
-            ThreadPool.QueueUserWorkItem(new WaitCallback(FindPlaneInThread), index);
+        QueueLength = amountOfIterations;
+        //start Threads (makes a que that includes all iteration-indexes)
+        for (int index = 0; index < amountOfIterations; index++)
+            ThreadPool.QueueUserWorkItem(new WaitCallback(FindPlaneInThread),index) ;
 
         //wait for the que to end
         while (QueueLength >0)
             ;
 
+
         //sorts the results and gives the appropriate result back;
         SortResults();
 
         //return 5th-biggest-value?
-        totalResult = results[5];
+        totalResult = results[amountOfIterations/20];
     }
     private int FindPointsForSomePlane()
     {

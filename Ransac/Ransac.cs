@@ -24,7 +24,7 @@ partial class Ransac
 
     Punt[] pointList;
 
-    public Ransac(int k, int b, int pX, int pY)
+    public Ransac(int k, int b, int pX, int pY, int amIter = 100)
     {
         r = new Random();
         amountOfPoints = 8000;
@@ -40,7 +40,7 @@ partial class Ransac
         boxWidth = 5000;
         boxHeight = 2000;
 
-        amountOfIterations = 100;  
+        amountOfIterations = amIter;  
         PlaneSupport = 0.9f;  
 
         FillBox();
